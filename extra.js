@@ -5,6 +5,8 @@ const foolProof = function(arg) {
         alert('Нужно ввести строку!');
     }
     arg.trim();
-    arg = arg.substr(0,30) + "...";
+    if (arg.length >= 30) {
+        arg = arg.substr(0,30) + "...";
+    }
     return arg;
 };
