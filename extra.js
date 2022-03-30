@@ -1,12 +1,17 @@
 'use strict';
-
-const foolProof = function(arg) {
-    if (typeof arg !== 'string') {
-        alert('Нужно ввести строку!');
-    }
-    arg.trim();
-    if (arg.length >= 30) {
-        arg = arg.substr(0,30) + "...";
-    }
-    return arg;
+// Задание №1.
+const spacesCutter = function(value) {     //  Функция убирает пробелы из вводимой строки
+    let updatedValue;
+    updatedValue = value.toString().trim();
+    parseFloat(updatedValue);
+    return updatedValue;
 };
+
+let screenPrice = prompt('Сколько будет стоить данная работа?');
+
+
+console.log(screenPrice);
+console.log(spacesCutter(screenPrice));
+
+// Задание №2.
+
