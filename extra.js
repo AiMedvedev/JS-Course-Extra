@@ -1,41 +1,80 @@
 'use strict';
 
-// Задание №1.  Немного не так сделал, как в задании. Я убрал у строки с числом пробелы уже после ввода пользователем.
-//              Как заблокировать возможность такого ввода, не догадался.
-
-
-let screenPrice = prompt('Сколько будет стоить данная работа?');
-
-const spacesCutter = function(value) {     //  Функция убирает пробелы из вводимой строки
-    let updatedValue;
-    updatedValue = value.toString().trim();
-    parseFloat(updatedValue);
-    return updatedValue;
+// Загадывание случайного числа от 1 до 100
+const isNumber = function(num) {                         
+    return !isNaN(parseFloat(num)) && isFinite(num);  // проверка на число
 };
 
+function guessGame (numberX) {
+    return function guessing (userAnswer, i) {    
+        if (i < 1) {
+          let again = confirm('Попытки закончились, хотите сыграть еще?');
+          if (again) {
+            gameStart(answer, i = 10);
+          } else {
+            return;
+          }
+        }  
 
-console.log(screenPrice);
-console.log(spacesCutter(screenPrice));
+        if(+userAnswer > numberX) {
+            if (userAnswer === null) {
+                alert('Игра окончена.');
+                return;
+            }
+            if (!isNumber(userAnswer)) {
+                alert('Введите число!');
+                
+            }
+            i--;
+            alert(`Загаданное число меньше. осталось попыток: ${i}`);
+            let newTry = prompt('Введите новый вариант');
+            if (newTry === null) {
+                alert('Игра окончена.');
+                return;
+            } else {
+            userAnswer = +newTry;
+            
+            }
+        }
+        
+        if (+userAnswer < numberX) {
+            if (userAnswer === null) {
+                alert('Игра окончена.');
+                return;
+            }
+        
+            if (!isNumber(userAnswer)) {
+                alert('Введите число!');
+            }
+            i--;
+            alert(`Загаданное число больше: осталось попыток: ${i}`); 
+            let newTry = prompt('Введите новый вариант');
+            if (newTry === null) {
+                alert('Игра окончена.');
+                return;
+            } else {
+            userAnswer = +newTry;
+            }
+        } 
+
+        if (+userAnswer === numberX) {
+            let again = confirm(`Поздравляю, Вы угадали!!! Это было число ${numberX}. Хотели бы сыграть еще?`);
+            if (again) {
+                gameStart(answer, i = 10);
+            } else {
+                return;
+            }
+        }
+
+        guessing(userAnswer, i);
+    };
+}
+
+let count = 10;
+const numberToGuess = () => {return Math.round(Math.random() * 100);};
+let answer = prompt('Угадай число от 1 до 100');
 
 
-// Задание №2.1.
+let gameStart = guessGame(numberToGuess());
 
-let arr = ['2456764', '143321', '8555243', '4006232', '296630', '533200', '934256641'];
-
-arr.forEach((number) => {
-    if (number.indexOf('2') === 0 || number.indexOf('4') === 0) {
-        console.log(number);
-    }
-});
-
-// Задание №2.2.
-
-let n = 100;
-nextPrime:
-    for (let i = 2; i <= n; i++) { 
-      for (let j = 2; j < i; j++) { 
-        if (i % j == 0) continue nextPrime; 
-      }
-
-      console.log(`${i}. Делитель этого числа: 1 и ${i}`); 
-    }
+gameStart(answer, count);
