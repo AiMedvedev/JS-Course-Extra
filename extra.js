@@ -6,7 +6,7 @@ let today = date.getDay()-1;
 
 
 week.splice(5, 2, week[5].italics(), week[6].italics());
-week.splice(date.getDay()-1, 1, week[date.getDay()-1].bold());
+week.splice(today, 1, week[today].bold());
 week.forEach((element, i) => {
     console.log(element);
 });
