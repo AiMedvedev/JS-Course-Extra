@@ -6,7 +6,7 @@ const appData = {
     rollback: 25,
     screenPrice: 0,
     adaptive: true,
-    services: {},
+    services: [],
     fullPrice: 0,  
     allServicePrices: 0,
     servicePercentPrice: 0,
@@ -47,25 +47,21 @@ const appData = {
             } 
             while (!appData.isNumber(price));
 
-            appData.services[name] = +price;
+            appData.services.push({id: i, name: name, price: +price});
         }
 
         appData.adaptive = confirm('Нужен ли адаптив на сайте?');
     },
     addPrices: function() {
-       
         appData.screenPrice = appData.screens.reduce((sum, current) => (sum + current.price), 0);
-        //appData.screenPrice = result;
-
-        for(let key in appData.services) {
-            appData.allServicePrices += appData.services[key];
-        }
+        
+        appData.allServicePrices = appData.services.reduce((sum, current) => (sum + current.price), 0);
     },
     getFullPrice: function() {
         appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
     },
     isNumber: function(num) {                         
-        return !isNaN(parseFloat(num)) && isFinite(num);  // проверка на число
+        return !isNaN(parseFloat(num)) && isFinite(num); 
     },
     getRollbackMessage: function(price) {
         if (price >= 30000) {
@@ -85,8 +81,8 @@ const appData = {
         appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback / 100));
     },
     logger: function() {
-        console.log(appData.screens);
-        console.log(appData.screenPrice);
+        console.log(appData.services);
+        //console.log(appData.screenPrice);
     },
     start: function() {
         appData.asking();
