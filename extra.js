@@ -30,7 +30,7 @@ const appData = {
             } 
             while (!appData.isNumber(price));
 
-            appData.screens.push({id: i, name: name, price: price});
+            appData.screens.push({id: i, name: name, price: +price});
         }
 
         for (let i = 0; i < 2; i++) {
@@ -53,9 +53,9 @@ const appData = {
         appData.adaptive = confirm('Нужен ли адаптив на сайте?');
     },
     addPrices: function() {
-        for (let screen of appData.screens) {
-            appData.screenPrice += +screen.price;
-        }
+       
+        appData.screenPrice = appData.screens.reduce((sum, current) => (sum + current.price), 0);
+        //appData.screenPrice = result;
 
         for(let key in appData.services) {
             appData.allServicePrices += appData.services[key];
@@ -85,9 +85,8 @@ const appData = {
         appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback / 100));
     },
     logger: function() {
-        console.log(appData.fullPrice);
-        console.log(appData.servicePercentPrice);
         console.log(appData.screens);
+        console.log(appData.screenPrice);
     },
     start: function() {
         appData.asking();
