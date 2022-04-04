@@ -6,7 +6,7 @@ const appData = {
     rollback: 25,
     screenPrice: 0,
     adaptive: true,
-    services: [],
+    services: {},
     fullPrice: 0,  
     allServicePrices: 0,
     servicePercentPrice: 0,
@@ -33,7 +33,7 @@ const appData = {
             appData.screens.push({id: i, name: name, price: +price});
         }
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 2; i++) {                      
             let name;
             let price = 0;
 
@@ -47,15 +47,21 @@ const appData = {
             } 
             while (!appData.isNumber(price));
 
-            appData.services.push({id: i, name: name, price: +price});
+            if (appData.services.hasOwnProperty(name)) {
+                appData.services[name + i] = +price;
+            } else {
+                appData.services[name] = +price;
+            }
         }
-
+        
         appData.adaptive = confirm('Нужен ли адаптив на сайте?');
     },
     addPrices: function() {
         appData.screenPrice = appData.screens.reduce((sum, current) => (sum + current.price), 0);
         
-        appData.allServicePrices = appData.services.reduce((sum, current) => (sum + current.price), 0);
+        for(let key in appData.services) {
+            appData.allServicePrices += appData.services[key];
+        }
     },
     getFullPrice: function() {
         appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
@@ -82,7 +88,12 @@ const appData = {
     },
     logger: function() {
         console.log(appData.services);
-        //console.log(appData.screenPrice);
+        console.log(appData.screenPrice);
+        console.log(appData.allServicePrices);
+        console.log(appData.servicePercentPrice);
+        console.log(appData.screens);
+        console.log(appData.services);
+        
     },
     start: function() {
         appData.asking();
