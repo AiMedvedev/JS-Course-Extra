@@ -1,109 +1,48 @@
 'use strict';
+//// Формат А.
 
-const appData = {
-    title: '',
-    screens: [],
-    rollback: 25,
-    screenPrice: 0,
-    adaptive: true,
-    services: {},
-    fullPrice: 0,  
-    allServicePrices: 0,
-    servicePercentPrice: 0,
-    asking: function() {
-        do {
-            appData.title = prompt('Как называется ваш проект?');
-        } 
-        while (appData.isNumber(appData.title));
-                   
-        for (let i = 0; i < 2; i++) {
-            let name;
-            let price = 0;
-            
-            do {
-                name = prompt('Какие типы экранов нужно разработать?');
-            } 
-            while (appData.isNumber(name));
+let currentDate = document.getElementById('time');
+const days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", 
+"августа", "сентября", "октября", "ноября", "декабря"];
 
-            do {
-                price = prompt('Сколько будет стоить данная работа?');
-            } 
-            while (!appData.isNumber(price));
+setInterval(() => {
+    
+    let year = new Date().getFullYear();
+    let month = new Date().getMonth();
+    let date = new Date().getDate();
+    let day = new Date().getDay().toLocaleString();
+    let hours = new Date().getHours().toLocaleString();
+    let minutes = new Date().getMinutes().toLocaleString();
+    let seconds = new Date().getSeconds().toLocaleString();
+    
+    hours = (hours < 10) ? '0' + hours : hours;
+    minutes = (minutes < 10) ? '0' + minutes : minutes;
+    seconds = (seconds < 10) ? '0' + seconds : seconds;
 
-            appData.screens.push({id: i, name: name, price: +price});
-        }
+    let hoursText = (hours === 1 || (hours > 19 && hours % 10 === 1)) ? 'час' :
+    ((hours > 1 && hours < 5) || (hours > 19 && hours % 10 > 1 && hours % 10 < 5)) ? 'часа' : 'часов';
 
-        for (let i = 0; i < 2; i++) {                      
-            let name;
-            let price = 0;
+    let minutesText = (minutes >= 2 && minutes < 5 || (minutes > 20 && (minutes % 10 >= 2 && minutes % 10 < 5))) ? 
+    'минуты' : (minutes === 1 || (minutes > 20 && minutes % 10 === 1)) ? 'минута' : 'минут';
 
-            do {
-                name = prompt('Какой дополнительный тип услуги нужен?');
-            } 
-            while (appData.isNumber(name));
-
-            do {
-                price = prompt('Сколько это будет стоить?');
-            } 
-            while (!appData.isNumber(price));
-
-            if (appData.services.hasOwnProperty(name)) {
-                appData.services[name + i] = +price;
-            } else {
-                appData.services[name] = +price;
-            }
-        }
-        
-        appData.adaptive = confirm('Нужен ли адаптив на сайте?');
-    },
-    addPrices: function() {
-        appData.screenPrice = appData.screens.reduce((sum, current) => (sum + current.price), 0);
-        
-        for(let key in appData.services) {
-            appData.allServicePrices += appData.services[key];
-        }
-    },
-    getFullPrice: function() {
-        appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
-    },
-    isNumber: function(num) {                         
-        return !isNaN(parseFloat(num)) && isFinite(num); 
-    },
-    getRollbackMessage: function(price) {
-        if (price >= 30000) {
-            return 'Даём скидку в 10%';
-        } else if (price < 30000 && price >= 15000) {
-            return 'Даём скидку в 5%';
-        } else if (price < 15000 && price >= 0) {
-            return 'Скидка не предусмотрена';
-        } else {
-            return 'Что-то пошло не так';
-        }
-    },
-    getTitle: function() {
-        appData.title = appData.title.trim()[0].toUpperCase() + appData.title.trim().substring(1).toLowerCase();
-    },
-    getServicePercentPrice: function() {
-        appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback / 100));
-    },
-    logger: function() {
-        console.log(appData.services);
-        console.log(appData.screenPrice);
-        console.log(appData.allServicePrices);
-        console.log(appData.servicePercentPrice);
-        console.log(appData.screens);
-        console.log(appData.services);
-        
-    },
-    start: function() {
-        appData.asking();
-        appData.addPrices();
-        appData.getFullPrice();
-        appData.getServicePercentPrice();
-        appData.getTitle();
-        appData.logger();
-    },
-};
+    let secondsText = (seconds >= 2 && seconds < 5 || (seconds > 20 && (seconds % 10 >= 2 && seconds % 10 < 5))) ? 
+    'секунды' : (seconds === 1 || (seconds > 20 && seconds % 10 === 1)) ? 'секунда' : 'секунд';
 
 
-appData.start();
+    currentDate.innerHTML = `Сегодня ${days[day]}, ${date} ${months[month]} ${year} года, 
+    ${hours} ${hoursText} ${minutes} ${minutesText} ${seconds} ${secondsText}`;    
+}, 1000);
+
+//// Формат Б.
+
+//let time = document.getElementById('time');
+//let currentDate = new Date().toLocaleDateString();
+//let currentTime = function getCurrentTimeString() {
+//     return new Date().toTimeString().replace(/ .*/, '');
+//};
+ 
+//setInterval(
+//    () => time.innerHTML =`${currentDate} - ` + currentTime(),
+//    1000
+//);
