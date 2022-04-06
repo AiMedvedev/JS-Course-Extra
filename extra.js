@@ -1,7 +1,7 @@
 'use strict';
 //// Формат А.
 
-let currentDate = document.getElementById('time');
+let currentDate = document.getElementById('currentDate');
 const days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", 
 "августа", "сентября", "октября", "ноября", "декабря"];
@@ -36,13 +36,13 @@ setInterval(() => {
 
 //// Формат Б.
 
-//let time = document.getElementById('time');
-//let currentDate = new Date().toLocaleDateString();
-//let currentTime = function getCurrentTimeString() {
-//     return new Date().toTimeString().replace(/ .*/, '');
-//};
+let time = document.getElementById('time');
+let nowDate = new Date().toLocaleDateString();
+let currentTime = function getCurrentTimeString() {
+     return new Date().toTimeString().replace(/ .*/, '');
+};
  
-//setInterval(
-//    () => time.innerHTML =`${currentDate} - ` + currentTime(),
-//    1000
-//);
+setInterval(
+    () => time.innerHTML =`${nowDate} - ` + currentTime(),
+    1000
+);
