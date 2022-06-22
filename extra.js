@@ -10,7 +10,7 @@ function guessGame (numberX) {
         if (i < 1) {
           let again = confirm('Попытки закончились, хотите сыграть еще?');
           if (again) {
-            gameStart(answer, i = 10);
+            gameStart(answer, i = 11);
           } else {
             return;
           }
@@ -60,7 +60,7 @@ function guessGame (numberX) {
         if (+userAnswer === numberX) {
             let again = confirm(`Поздравляю, Вы угадали!!! Это было число ${numberX}. Хотели бы сыграть еще?`);
             if (again) {
-                gameStart(answer, i = 10);
+                gameStart(answer, i = 11);
             } else {
                 return;
             }
