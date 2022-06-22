@@ -1,4 +1,4 @@
-# JS-Course-Extra
+# JS-Course ExtraTasks
 
 Усложнённые задания курса по JavaScript от GloAcademy:
 
